@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Pathology 2025 Paper Mock Test - Razaagripoint</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #4a148c; /* Deep Pathology Purple */
+            --primary-light: #7c43bd;
+            --dark: #12005e;
+            --accent: #ffb300; /* Gold */
+            --bg: #f3e5f5;
+            --white: #ffffff;
+            --text: #2c3e50;
+            --shadow: 0 10px 30px rgba(74, 20, 140, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; background-image: radial-gradient(circle at top right, #e1bee7, #f3e5f5); }
+
+        /* --- Navbar --- */
+        nav { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .logo { color: var(--primary); font-size: 24px; font-weight: 800; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .exit-btn { background: #ffebee; color: #d32f2f; text-decoration: none; padding: 8px 20px; border-radius: 20px; font-weight: 600; font-size: 14px; transition: 0.3s; border: 1px solid #ffcdd2; }
+        .exit-btn:hover { background: #d32f2f; color: var(--white); }
+
+        /* --- Main Layout Container --- */
+        .container { flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+        
+        /* Glassmorphism Card */
+        .quiz-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); width: 100%; max-width: 850px; border-radius: 30px; box-shadow: var(--shadow); padding: 50px; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.5); }
+
+        /* --- 1. Premium Language Welcome Screen --- */
+        .lang-screen { text-align: center; }
+        .welcome-badge { background: var(--accent); color: var(--dark); padding: 8px 20px; border-radius: 30px; font-weight: 800; font-size: 14px; display: inline-block; margin-bottom: 20px; letter-spacing: 1px; }
+        .lang-screen i.main-icon { font-size: 70px; color: var(--primary); margin-bottom: 20px; animation: float 3s ease-in-out infinite; filter: drop-shadow(0 10px 10px rgba(74,20,140,0.2)); }
+        .lang-screen h1 { font-size: 36px; color: var(--dark); font-weight: 800; margin-bottom: 15px; }
+        .lang-screen p { color: #555; margin-bottom: 40px; font-size: 16px; line-height: 1.6; max-width: 600px; margin-left: auto; margin-right: auto; }
+        
+        .lang-btn-grid { display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 400px; margin: 0 auto; }
+        .lang-btn { background: linear-gradient(135deg, var(--primary), var(--dark)); border: none; border-radius: 20px; padding: 25px 20px; font-size: 20px; font-weight: 700; color: var(--white); cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 8px; box-shadow: 0 10px 20px rgba(74,20,140,0.3); }
+        .lang-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 25px rgba(74,20,140,0.4); }
+        .lang-btn span { font-size: 14px; color: var(--accent); font-weight: 500; }
+
+        /* --- 2. Quiz Screen --- */
+        .quiz-screen { display: none; }
+        .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 2px solid #f3e5f5; padding-bottom: 15px; }
+        .q-count { font-weight: 800; color: var(--white); background: var(--primary); padding: 6px 20px; border-radius: 20px; font-size: 15px; box-shadow: 0 4px 10px rgba(74,20,140,0.2); }
+        
+        .progress-container { width: 100%; background: #e1bee7; height: 10px; border-radius: 5px; margin-bottom: 30px; overflow: hidden; }
+        .progress-bar { height: 100%; background: linear-gradient(90deg, var(--primary-light), var(--primary)); width: 0%; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        .question-text { font-size: 24px; font-weight: 700; color: var(--dark); margin-bottom: 30px; line-height: 1.5; }
+        
+        .options-grid { display: flex; flex-direction: column; gap: 15px; margin-bottom: 35px; }
+        .option { background: var(--white); border: 2px solid #e1bee7; border-radius: 16px; padding: 20px 25px; font-size: 17px; font-weight: 500; text-align: left; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: space-between; color: #444; }
+        .option:hover { background: #f3e5f5; border-color: var(--primary-light); transform: scale(1.01); }
+        .option.selected { background: #f3e5f5; border-color: var(--primary); color: var(--primary); font-weight: 700; box-shadow: 0 4px 15px rgba(124,67,189,0.1); }
+
+        .quiz-footer { display: flex; justify-content: space-between; align-items: center; }
+        .nav-btn { background: var(--primary); color: var(--white); border: none; padding: 15px 40px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 10px; box-shadow: 0 5px 15px rgba(74,20,140,0.2); }
+        .nav-btn:hover { background: var(--dark); transform: translateY(-2px); }
+        .nav-btn:disabled { background: #ce93d8; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        /* --- 3. Result Screen --- */
+        .result-screen { display: none; text-align: center; }
+        .result-screen .congrats-icon { font-size: 80px; color: var(--accent); margin-bottom: 20px; animation: bounce 2s infinite; filter: drop-shadow(0 10px 10px rgba(255,179,0,0.3)); }
+        .result-screen h2 { font-size: 40px; font-weight: 800; color: var(--dark); margin-bottom: 15px; }
+        .message-box { font-size: 18px; color: #555; max-width: 600px; margin: 0 auto 30px auto; line-height: 1.6; font-weight: 500; }
+        
+        .score-circle { width: 180px; height: 180px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-light), var(--primary)); color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 40px auto; box-shadow: 0 15px 30px rgba(74,20,140,0.4); border: 5px solid #f3e5f5; }
+        .score-circle h1 { font-size: 56px; font-weight: 800; line-height: 1; margin-bottom: 0; }
+        .score-circle span { font-size: 16px; opacity: 0.9; font-weight: 600; text-transform: uppercase; margin-top: 5px; }
+
+        .restart-btn { background: var(--accent); color: var(--dark); border: none; padding: 18px 50px; border-radius: 30px; font-size: 18px; font-weight: 800; cursor: pointer; transition: 0.3s; box-shadow: 0 8px 20px rgba(255,179,0,0.4); }
+        .restart-btn:hover { background: #ff8f00; transform: scale(1.05); }
+
+        /* --- Animations --- */
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-25px); } 60% { transform: translateY(-12px); } }
+
+        footer { text-align: center; padding: 25px; margin-top: auto; border-top: 1px solid #e1bee7; background: #fff; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo"><i class="fa-solid fa-microscope"></i> Razaagripoint</a>
+        <a href="index.html" class="exit-btn"><i class="fa-solid fa-xmark"></i> Exit Test</a>
+    </nav>
+
+    <div class="container">
+        <div class="quiz-card">
+            
+            <div id="langScreen" class="lang-screen">
+                <div class="welcome-badge">🏆 OFFICIAL 2025 PAPER MOCK TEST</div>
+                <i class="fa-solid fa-vials main-icon"></i>
+                <h1>Fundamentals of Plant Pathology</h1>
+                <p>Jaisa ki aapne YouTube video mein dekha, yahan pure <b>75 Original Questions</b> available hain. Test start karen aur apna score turant check karen!</p>
+                
+                <div class="lang-btn-grid">
+                    <button class="lang-btn" onclick="startQuiz()">
+                        Start 75 Questions Test
+                        <span>Hindi Medium - Original Paper</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="quizScreen" class="quiz-screen">
+                <div class="quiz-header">
+                    <span id="questionCount" class="q-count">Question 1 of 75</span>
+                </div>
+                
+                <div class="progress-container">
+                    <div id="progressBar" class="progress-bar"></div>
+                </div>
+
+                <div id="questionText" class="question-text">Loading Question...</div>
+                
+                <div id="optionsGrid" class="options-grid"></div>
+
+                <div class="quiz-footer">
+                    <button id="prevBtn" class="nav-btn" onclick="prevQuestion()" disabled><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                    <button id="nextBtn" class="nav-btn" onclick="nextQuestion()">Next <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div id="resultScreen" class="result-screen">
+                <div id="congratsIcon" class="congrats-icon"><i class="fa-solid fa-crown"></i></div>
+                <h2 id="resultHeading">Great Job!</h2>
+                <div id="messageBox" class="message-box">Results loading...</div>
+                
+                <div class="score-circle">
+                    <h1 id="scoreDisplay">00</h1>
+                    <span>Out of 75</span>
+                </div>
+
+                <button class="restart-btn" onclick="restartQuiz()"><i class="fa-solid fa-rotate-right"></i> Retake Test</button>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p style="font-size: 14px; color: #888;">Designed by <b>MUSHAHID RAZA</b> with ❤️ for BSc Agriculture Students</p>
+    </footer>
+
+    <script>
+        // Exact 75 Questions from 2025 Previous Year Paper (No ICAR tags, Clean Format)
+        const quizData = [
+            { q: "पादप रोग विज्ञान के जनक कौन हैं?", o: ["पी. ए. मिकेली", "टिलेट", "एल. पाश्चर", "डी बैरी"], a: 3 },
+            { q: "पादप रोग विज्ञान की प्रथम पुस्तक किसने लिखी?", o: ["पर्सन", "प्रीवोस्ट", "जे. कुहन", "बरकले"], a: 2 },
+            { q: "बंगाल का बड़ा दुर्भिक्ष (Great Bengal Famine) किस वर्ष आया?", o: ["1943", "1950", "1982", "1971"], a: 0 },
+            { q: "वायराइड जनित आलू का तुर्क कंद रोग (Potato Spindle Tuber) किसने प्रतिवेदित किया?", o: ["टी. जे. बुरिल", "ई. एफ. स्मिथ", "डीनर", "इवानोवस्की"], a: 2 },
+            { q: "वायराइड (Viroids) निर्मित होते हैं:", o: ["आर. एन. ए.", "डी. एन. ए.", "प्रोटीन", "आर. एन. ए. एवं डी. एन. ए."], a: 0 },
+            { q: "कौन सा रोग उत्पन्न करने वाला कारक मध्यजीवीय (Mesobiotic) है?", o: ["कवक", "जीवाणु", "सूत्रकृमि", "विषाणु"], a: 3 },
+            { q: "किस जीव का आकार तले हुए अंडे (Fried Egg Shape) की तरह होता है?", o: ["प्रोटोजोआ", "पैरामीशियम", "माइकोप्लाज्मा", "शैवाल"], a: 2 },
+            { q: "कौन सा अनावृतबीजी / पुष्पीय परजीवी पूर्ण जड़ परजीवी है?", o: ["लोरेन्थस", "स्ट्राइगा", "ओरोबैंकी", "कस्कुटा"], a: 2 },
+            { q: "निम्नलिखित में कौन सा लैंगिक फलनकाय (Sexual Fruiting Body) नहीं है?", o: ["क्लीस्टोथीसियम", "एसरवुलस", "पेरीथीसियम", "एपोथीसियम"], a: 1 },
+            { q: "कौन सा भाग कवक (Fungus) का नहीं है?", o: ["बीजाणु", "कवक तन्तु", "एप्रेसोरियम", "अंडा"], a: 3 },
+            { q: "कवकों में पोषण की विधि क्या है?", o: ["परजीवी", "मृतोपजीवी", "सहजीवी", "सभी"], a: 3 },
+            { q: "कवकजाल (Mycelium) की रूपांतरित संरचना कौन सी नहीं है?", o: ["राइजोमार्फ", "स्क्लेरोशियम", "हॉस्टोरियम", "चल बीजाणु"], a: 3 },
+            { q: "कौन सी घटना रोग चक्र (Disease Cycle) में होती है?", o: ["संरोपण", "प्रवेशन", "संक्रमण", "सभी"], a: 3 },
+            { q: "कवकों में जनन की कौन सी अलैंगिक (Asexual) विधि नहीं है?", o: ["मुकुलन", "विखंडन", "कायिक युग्मन", "अपखण्डन"], a: 2 },
+            { q: "कवक का कौन सा लैंगिक बीजाणु (Sexual Spore) नहीं है?", o: ["निषिक्तांड", "जाइगोस्पोर", "बेसिडियोस्पोर", "कोनीडियम"], a: 3 },
+            { q: "कवकों का कौन सा बीजाणु अलैंगिक (Asexual Spore) नहीं है?", o: ["चलबीजाणु", "अचलबीजाणु", "संधि बीजाणु", "एस्कोस्पोर"], a: 3 },
+            { q: "चल बीजाणु (Zoospores) किसके अंदर बनते हैं?", o: ["कोनीडियम", "बीजाणुधानी", "एसरवुलस", "पेरीथीसियम"], a: 1 },
+            { q: "सहजीवन शब्द किसके द्वारा गढ़ा गया?", o: ["एनटान डी वेरी", "प्रीवोस्ट", "राबर्ट कोच", "इ. जे. बटलर"], a: 0 },
+            { q: "निम्नलिखित में सबसे छोटा जीवाणु कौन है?", o: ["जैन्थोमोनास", "स्यूडोमोनास", "इरवीनिया", "माइकोप्लाज्मा"], a: 3 },
+            { q: "पेनिसिलीन किस वैज्ञानिक द्वारा खोजी गयी?", o: ["राबर्ट कोच", "नीधम", "पाश्चर एल", "फ्लेमिंग"], a: 3 },
+            { q: "प्रथम सूक्ष्मदर्शी किसके द्वारा खोजी गयी?", o: ["रेडी", "जानसेन, जेड.", "हुक, आर.", "पेट्री, जे."], a: 1 },
+            { q: "कौन सा जीवाणु धान से जीवाणु पर्ण झुलसा रोग (Bacterial Leaf Blight) उत्पन्न करता है?", o: ["जैन्थोमोनास", "सूडोमोनास", "इरवीनिया", "राइजोबियम"], a: 0 },
+            { q: "कौन सा घटक ग्राम (+) जीवाणुओं में ज्यादा पाया जाता है?", o: ["लिपिड", "म्यूरीन", "टीकोइक अम्ल", "लाइपोपाली सैकराइड"], a: 2 },
+            { q: "कौन सा घटक जीवाणु कोशिका में नहीं पाया जाता?", o: ["केन्द्रकीय झिल्ली", "राइबोसोम", "कोशा भित्ति", "पिलाई"], a: 0 },
+            { q: "जीवाणुओं में लैंगिक जनन की कौन सी विधि नहीं है?", o: ["पारक्रमण", "रूपान्तरण", "संयुग्मन", "विखंडन"], a: 3 },
+            { q: "जीवाणु अभिरंजन में कौन सा रसायन प्रयोग नहीं होता है?", o: ["क्रिस्टल वायलेट", "आयोडीन विलयन", "सैफरामिन", "लैक्टिक एसिड"], a: 3 },
+            { q: "कौन सा संयंत्र पी. डी. ए. को निर्जलीकृत करने के लिए प्रयोग होता है?", o: ["आटोक्लेव", "ओवेन", "लैमीनार फ्लो", "इनकुबेटर"], a: 0 },
+            { q: "पी.डी.ए. (PDA) को कितने तापक्रम पर आटोक्लेव में निर्जलीकृत किया जाता है?", o: ["150°C", "110°C", "121.6°C", "140.5°C"], a: 2 },
+            { q: "छड़ाकार जीवाणु क्या कहलाते हैं?", o: ["कोकाई", "बैसालाई", "माइकोप्लाज्मा", "आरकिया"], a: 1 },
+            { q: "किस जीवाणु के पूरी कोशा सतह पर कशाभ (Flagella) पाये जाते है?", o: ["मोनोट्राइकस", "एट्राइकस", "पेरीट्राइकस", "लोफोट्राइकस"], a: 2 },
+            { q: "जीवाणु में कितने गुणसूत्र उपस्थित होते है?", o: ["एक", "दो", "पाँच", "चार"], a: 0 },
+            { q: "प्लाजमिड शब्द किसके द्वारा गढ़ा गया?", o: ["वाक्समैन", "लीडरबर्ग, जे.", "फ्लेमिंग", "स्मिथ"], a: 1 },
+            { q: "कौन सा जीवाणु मृदा में नत्रजन स्थरीकरण (Nitrogen Fixation) में योगदान देता है?", o: ["इ. कोलाई", "राइजोबियम", "राल्सटोनिया", "जैनथोमोनास"], a: 1 },
+            { q: "कौन से जीवाणु नीली-हरित शैवाल कहलाते है?", o: ["एक्टीनोमाइसिटीस", "आरकिया", "सायनोवैक्टीरिया", "मालीक्यूटस"], a: 2 },
+            { q: "कौन सा जीवाणु नीबू में सिट्रस कैंकर रोग उत्पन्न करता है?", o: ["जैन्थोमोनास सिट्री", "सूडोमोनास स्पे.", "वैसिलस स्पे.", "इ. कोलाई"], a: 0 },
+            { q: "प्रत्येक एस्कस (Ascus) में कितने एस्कोस्पोर पाये जाते है?", o: ["चार", "आठ", "छह", "नौ"], a: 1 },
+            { q: "कौन सा एक कोशकीय कवक है?", o: ["एस्परजीलस", "पेनिसिलियम", "एल्बयुगो", "सैकरोमाइसेज"], a: 3 },
+            { q: "निम्नलिखित में कौन सा अविकल्पी परजीवी (Obligate Parasite) नहीं है?", o: ["एलबुगो", "पक्कसीनिया", "अल्टरनेरिया", "यूरोमाइसेज"], a: 2 },
+            { q: "कौन सा मृदा जनित कवक (Soil Borne Fungus) नहीं है?", o: ["एल्बुगो", "राइजोक्टोनिया", "फ्यूजेरियम", "पीथियम"], a: 0 },
+            { q: "निम्नलिखित में कौन सा रोग बीज-जनित (Seed Borne) नहीं है?", o: ["गन्ने का लाल सड़ना", "गेहूँ का खुला कण्डुआ", "जौ का बंद कंडवात", "सेब का स्कैब"], a: 3 },
+            { q: "निम्नलिखित में कौन सा किट्ट रोग उत्पन्न करने वाला कवक नहीं है?", o: ["पक्कसीनिया", "यूरोमाइसेज", "मेलैम्पसोरा", "फ्यूजेरियम"], a: 3 },
+            { q: "निम्नलिखित में कौन सा कवक मृदुल आसिता रोग उत्पन्न करने वाला नहीं है?", o: ["पेरेनोस्पोरा", "स्क्लेरोस्पोरा", "प्लासमोपारा", "अल्टरनेरिया"], a: 3 },
+            { q: "निम्नलिखित में कौन सरसो का सफेद किट्ट रोग उत्पन्न करता है?", o: ["पीथियम", "अल्टरनेरिया", "एल्ब्यूगो", "फ्यूजेरियम"], a: 2 },
+            { q: "निम्नलिखित में कौन सा मृतोपजीवी कवक है?", o: ["राइजोपस", "पीथियम", "एल्ब्यूगो", "फ्यूजेरियम"], a: 0 },
+            { q: "निम्नलिखित में कौन सा बीजाणु पक्कसीनिया का नहीं है?", o: ["यूरेडोस्पोर", "बैसिडियोस्पोर", "टेलिइयोस्पोर", "कोनिडिया"], a: 3 },
+            { q: "पक्कसीनिया के जीवन चक्र में कितनी अवस्थाएं पायी जाती है?", o: ["पाँच", "चार", "आठ", "छह"], a: 0 },
+            { q: "निम्नलिखित में कौन सा कवक पाउडरी मिल्डयू उत्पन्न करता है?", o: ["इरीसाइफी", "पक्कसीनिया", "एल्ब्यूगो", "यूरोमाइसेज"], a: 0 },
+            { q: "किस प्रकार की संरचना में एस्काई बनते है?", o: ["पेरीथीसियम", "बीजाणुधानी", "स्पोरोडोकियम", "एसरवुलस"], a: 0 },
+            { q: "निम्नलिखित में कौन सा खाद्य कवक नहीं है?", o: ["एगारीकस", "राइजोपस", "प्लूरोटस", "वालवेरेल्ला"], a: 1 },
+            { q: "निम्नलिखित में कौन रोटी मोल्ड कवक कहलाता है?", o: ["राइजोपस", "पीथियम", "फ्यूजेरियम", "एल्ब्यूगो"], a: 0 },
+            { q: "निम्नलिखित में कौन सा रोग परपोसी में सवांगी संक्रमण उत्पन्न करता है?", o: ["किट्ट रोग", "झुलसा रोग", "मृदुल आर्सिता रोग", "कैंकर रोग"], a: 2 },
+            { q: "निम्नलिखित में कौन सा मध्यजैविक कारक है?", o: ["कवक", "जीवाणु", "विषाणु", "सूत्रकृमि"], a: 2 },
+            { q: "ऊताक्षयी का क्या अर्थ है?", o: ["पर्णहरित का नाश", "ऊतकों का सड़न", "कोशिका विभाजन", "ऊतकों का मरना"], a: 3 },
+            { q: "निम्नलिखित में कौन सा पत्ती विहीन पादप परजीवी है?", o: ["अमरबेल", "बांदा", "स्ट्राइगा", "ओरोबैंकी"], a: 0 },
+            { q: "निम्नलिखित में कौन सा बैंगन का छोटी पत्ती रोग का रोग कारक है?", o: ["माइकोप्लाज्मा", "जैन्थोमोनास", "इरवीनिया", "एल्बुगो"], a: 0 },
+            { q: "जैन्थोमोनास कैम्पेस्ट्रिस जीवाणु की सतह पर कितने कशाभ पाये जाते है?", o: ["एक", "दो", "तीन", "चार"], a: 0 },
+            { q: "निम्नलिखित में कौन पादप जीवाणु विज्ञानी नहीं है?", o: ["एम. के. पटेल", "वी. पी. भिंडे", "जी. रंगास्वामी", "इ. जे. बटलर"], a: 3 },
+            { q: "इन्डियन फाइटोपैथोलाजीकल सोसाइटी किसने स्थापित की?", o: ["बी. बी. मुन्दकुर", "जी. एस. कुलकरणी", "के. सी. मेहता", "जे. एफ. डस्टर"], a: 0 },
+            { q: "निम्नलिखित में कौन सा फैस्टीडियस जीवाणु है?", o: ["जैन्थोमोनास", "सूडोमोनास", "इरवीनिया", "जाइलेला"], a: 3 },
+            { q: "निम्नलिखित जीवाणुओं में कौन सेब का आग झुलसा रोग पैदा करता है?", o: ["जैन्थोमोनास कैम्पेस्ट्रिस", "इरवीनिया एमाइलोवोरा", "स्ट्रेप्टोमाइसीज़", "एग्रोबाक्टेरियम"], a: 1 },
+            { q: "निम्नलिखित में कौन सा रोग फाइटोफ्थोरा स्पे. के कारण होता है?", o: ["आर्द्रपतन", "पछेती झुलसा", "लाल सड़न", "सफेद किट्ट"], a: 1 },
+            { q: "निम्नलिखित में कौन सा रोग इरीसाइफी स्पे. के द्वारा उत्पन्न होता है?", o: ["मृदुल आर्सिता", "चूर्णी आर्सिता", "जड़ सड़न", "मृदु सड़न"], a: 1 },
+            { q: "निम्नलिखित में कौन सा पक्कसीनिया स्पे. के लिए एकान्तर परजीवी है?", o: ["जौ", "गन्ना", "बारबेरी", "नींबू घास"], a: 2 },
+            { q: "निम्नलिखित में कौन सा पक्कसीनिया स्पे. का बीजाणु पुनरावृत्ति बीजाणु कहलाता है?", o: ["टेलिटो बीजाणु", "यूरेडो बीजाणु", "पिकनियो बीजाणु", "एसियो बीजाणु"], a: 1 },
+            { q: "निम्नलिखित में कौन सा फाइटोफ्थोरा स्पे. का लैंगिक बीजाणु है?", o: ["चलबीजाणु", "निषिक्तांड / ऊस्पोर", "कोनिडियम", "अचलबीजाणु"], a: 1 },
+            { q: "निम्नलिखित में कौन सा फाइटोफ्थोरा स्पे. का लैंगिक अंग है?", o: ["अंडधानी (Oogonium)", "चूसकांग", "आसगांग", "बीजाणु"], a: 0 },
+            { q: "निम्नलिखित में कौन सा कवकों का अलैंगिक फलनकाय है?", o: ["पेरीथीसियम", "एपोथीसियम", "एसरवुलस", "क्लीस्टोथीसियम"], a: 2 },
+            { q: "निम्नलिखित में कौन सा सूक्ष्म जीव एक कोशकीय यूकैरियोटिक है?", o: ["यीस्ट", "प्रोटोजोआ", "माइकोप्लाज्मा", "इरवीनिया"], a: 0 },
+            { q: "निम्नलिखित में कौन सा रोग प्रोटोजोआ से उत्पन्न होता है?", o: ["कॉफी का floem ऊताक्षय", "गन्ने का लाल सड़न", "बैंगन का लघु पत्ती", "सरसों का सफेद किट्ट"], a: 0 },
+            { q: "कौन सा रोग जिंक की कमी के कारण होता है?", o: ["खैरा", "आम का शीर्ष काला", "फूलगोभी का ह्विपटेल", "फूलगोभी का भूरापन"], a: 0 },
+            { q: "विषाणु पत्ती रस से संचारित होता है?", o: ["TMV", "CLCV", "YVMV", "BBV"], a: 0 },
+            { q: "विषाणु सूत्र कृमि द्वारा संचारित होता है?", o: ["PVX", "GFLV", "CMV", "TMV"], a: 1 },
+            { q: "विषाणु कवक द्वारा संचरित होता है?", o: ["TNV", "TSV", "PVX", "GFLV"], a: 0 },
+            { q: "सूत्रकृमि के जनक कौन हैं?", o: ["बटलर", "डी. बैरी", "एन. ए. काब", "राबर्ट कोच"], a: 2 },
+            { q: "मेलोइडोगाइनी स्पे. सूत्रकृमि द्वारा पैदा होता है?", o: ["जड़ग्रन्थि", "धान का कन्डुआ", "कैंकर", "झोंका रोग"], a: 0 }
+        ];
+
+        let currentIdx = 0;
+        let answers = new Array(75).fill(null);
+
+        function startQuiz() {
+            document.getElementById('langScreen').style.display = 'none';
+            document.getElementById('quizScreen').style.display = 'block';
+            showQ();
+        }
+
+        function showQ() {
+            const q = quizData[currentIdx];
+            document.getElementById('questionCount').innerText = `Question ${currentIdx + 1} of 75`;
+            document.getElementById('questionText').innerText = q.q;
+            
+            // Progress Bar Logic
+            document.getElementById('progressBar').style.width = `${((currentIdx + 1) / 75) * 100}%`;
+
+            const grid = document.getElementById('optionsGrid');
+            grid.innerHTML = '';
+            
+            q.o.forEach((txt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'option' + (answers[currentIdx] === i ? ' selected' : '');
+                
+                // Pure minimal text format
+                btn.innerHTML = `<span>${txt}</span> <i class="fa-regular ${answers[currentIdx] === i ? 'fa-circle-check' : 'fa-circle'}"></i>`;
+                
+                btn.onclick = () => { answers[currentIdx] = i; showQ(); };
+                grid.appendChild(btn);
+            });
+
+            // Navigation Buttons Logic
+            document.getElementById('prevBtn').disabled = currentIdx === 0;
+            const nBtn = document.getElementById('nextBtn');
+            if (currentIdx === 74) {
+                nBtn.innerHTML = 'Submit Exam <i class="fa-solid fa-flag-checkered"></i>';
+                nBtn.style.background = '#4a148c'; // Match primary
+            } else {
+                nBtn.innerHTML = 'Next <i class="fa-solid fa-arrow-right"></i>';
+                nBtn.style.background = 'var(--primary)';
+            }
+        }
+
+        function nextQuestion() {
+            if (currentIdx < 74) { currentIdx++; showQ(); } else { results(); }
+        }
+
+        function prevQuestion() {
+            if (currentIdx > 0) { currentIdx--; showQ(); }
+        }
+
+        function results() {
+            let score = 0;
+            quizData.forEach((q, i) => { if(answers[i] === q.a) score++; });
+            
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'block';
+            document.getElementById('scoreDisplay').innerText = score;
+            
+            const perc = (score / 75) * 100;
+            const h = document.getElementById('resultHeading');
+            const m = document.getElementById('messageBox');
+            
+            if(perc >= 80) {
+                h.innerText = "👑 Ultimate Pathology Topper!";
+                m.innerText = "Kya baat hai! Aapne 2025 ke iss original paper mein sach mein aag laga di hai. Razaagripoint ko aap par garv hai. Aap main exam ke liye bilkul taiyar hain!";
+            } else if(perc >= 50) {
+                h.innerText = "✨ Superb Effort!";
+                m.innerText = "Bahut badiya! Aapke fundamentals clear hain. Jin questions mein galti hui hai unko ek baar notes se revise karein. Aap topper ban sakte hain!";
+            } else {
+                h.innerText = "📚 Keep Learning!";
+                m.innerText = "Ghabrane ki baat nahi hai! Plant Pathology mein revision ki zarurat hoti hai. Video ko ek baar dubara dhyan se dekhiye aur notes padhiye. Aap zarur achha karenge!";
+            }
+        }
+
+        function restartQuiz() {
+            currentIdx = 0; 
+            answers.fill(null);
+            document.getElementById('resultScreen').style.display = 'none';
+            document.getElementById('langScreen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
