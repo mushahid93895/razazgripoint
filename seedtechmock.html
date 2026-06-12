@@ -3,116 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seed Technology MJPRU Mock Test - Razaagripoint</title>
+    <title>Seed Technology Mock Test - Premium Edition</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --primary: #2e7d32;
-            --primary-light: #66bb6a;
-            --dark: #1b5e20;
-            --accent: #ffca28;
-            --bg: #f1f8e9;
+            --primary: #00b09b;
+            --primary-dark: #00838f;
+            --accent: #ffb300;
+            --bg-gradient: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
             --white: #ffffff;
-            --text: #2c3e50;
-            --shadow: 0 10px 30px rgba(46, 125, 50, 0.1);
+            --text-dark: #1a202c;
+            --text-gray: #4a5568;
+            --correct-bg: #c6f6d5;
+            --correct-border: #38a169;
+            --correct-text: #22543d;
+            --wrong-bg: #fed7d7;
+            --wrong-border: #e53e3e;
+            --wrong-text: #742a2a;
+            --shadow: 0 20px 40px rgba(0, 131, 143, 0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+        body { background: var(--bg-gradient); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
 
-        /* --- Navbar --- */
-        nav { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
-        .logo { color: var(--primary); font-size: 24px; font-weight: 800; text-decoration: none; display: flex; align-items: center; gap: 10px; }
-        .exit-btn { background: #fff3e0; color: #e65100; text-decoration: none; padding: 8px 20px; border-radius: 20px; font-weight: 600; font-size: 14px; transition: 0.3s; border: 1px solid #ffe0b2; }
-        .exit-btn:hover { background: #e65100; color: var(--white); }
+        /* Background Blobs */
+        .blob { position: fixed; border-radius: 50%; filter: blur(60px); z-index: -1; animation: floatBlob 10s infinite alternate; }
+        .blob-1 { width: 300px; height: 300px; background: rgba(0, 176, 155, 0.3); top: -100px; left: -100px; }
+        .blob-2 { width: 400px; height: 400px; background: rgba(255, 179, 0, 0.2); bottom: -150px; right: -100px; animation-delay: 2s; }
+        @keyframes floatBlob { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(50px, 50px) scale(1.1); } }
 
-        /* --- Main Layout Container --- */
-        .container { flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 30px 20px; }
-        .quiz-card { background: var(--white); width: 100%; max-width: 800px; border-radius: 24px; box-shadow: var(--shadow); padding: 40px; position: relative; overflow: hidden; border: 1px solid rgba(0,0,0,0.03); }
+        /* Navbar */
+        nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-bottom: 1px solid rgba(255,255,255,0.5); }
+        .logo { color: var(--primary-dark); font-size: 24px; font-weight: 800; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .exit-btn { background: #ffebee; color: #d32f2f; text-decoration: none; padding: 8px 20px; border-radius: 20px; font-weight: 600; font-size: 14px; transition: 0.3s; border: 1px solid #ffcdd2; }
+        .exit-btn:hover { background: #d32f2f; color: var(--white); }
 
-        /* --- 1. Language Screen --- */
+        /* Layout Container */
+        .container { flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; z-index: 1; }
+        .quiz-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); width: 100%; max-width: 900px; border-radius: 30px; box-shadow: var(--shadow); padding: 50px; position: relative; border: 1px solid rgba(255,255,255,0.8); }
+
+        /* --- 1. Multi-Test Welcome Screen --- */
         .lang-screen { text-align: center; }
-        .lang-screen i.main-icon { font-size: 60px; color: var(--primary-light); margin-bottom: 20px; animation: float 3s ease-in-out infinite; }
-        .lang-screen h1 { font-size: 32px; color: var(--dark); font-weight: 800; margin-bottom: 10px; }
-        .lang-screen p { color: #666; margin-bottom: 40px; font-size: 16px; }
-        .lang-btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 500px; margin: 0 auto; }
-        .lang-btn { background: var(--white); border: 2px solid #e0e0e0; border-radius: 16px; padding: 25px 20px; font-size: 18px; font-weight: 700; color: var(--dark); cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .lang-btn:hover { border-color: var(--primary-light); background: #f1f8e9; transform: translateY(-5px); box-shadow: 0 10px 20px rgba(46,125,50,0.1); }
-        .lang-btn span { font-size: 13px; color: #777; font-weight: 400; }
+        .welcome-badge { background: linear-gradient(90deg, #ff9800, #ffb300); color: #fff; padding: 8px 25px; border-radius: 30px; font-weight: 800; font-size: 14px; display: inline-block; margin-bottom: 15px; letter-spacing: 1px; box-shadow: 0 4px 10px rgba(255, 179, 0, 0.3); }
+        .lang-screen i.main-icon { font-size: 70px; background: -webkit-linear-gradient(var(--primary-dark), var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; filter: drop-shadow(0 10px 10px rgba(0, 131, 143, 0.2)); animation: bounceIcon 3s ease-in-out infinite; }
+        .lang-screen h1 { font-size: 38px; color: var(--primary-dark); font-weight: 800; margin-bottom: 10px; }
+        .lang-screen p { color: var(--text-gray); margin-bottom: 35px; font-size: 16px; line-height: 1.6; max-width: 650px; margin-left: auto; margin-right: auto; }
+        @keyframes bounceIcon { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        /* THE PREMIUM TEST SELECTION CARDS */
+        .test-options-container { display: flex; flex-direction: column; gap: 20px; max-width: 750px; margin: 0 auto; }
+        
+        .test-selection-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 20px 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .test-selection-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.12); }
+        
+        .t-card-1 { border-color: #ffb300; background: linear-gradient(to right, #ffffff, #fffdf2); }
+        .t-card-2 { border-color: #00b09b; background: linear-gradient(to right, #ffffff, #e0f2f1); }
+        .t-card-3 { border-color: #ab47bc; background: linear-gradient(to right, #ffffff, #f3e5f5); }
+        
+        .t-card-1::before { content: 'RECOMMENDED'; position: absolute; top: 12px; right: -35px; background: #ffb300; color: #fff; font-size: 11px; font-weight: 900; padding: 5px 40px; transform: rotate(45deg); letter-spacing: 1px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+
+        .t-icon-box { width: 75px; height: 75px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 32px; color: #fff; flex-shrink: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .t-icon-1 { background: linear-gradient(135deg, #ffb300, #ff8f00); }
+        .t-icon-2 { background: linear-gradient(135deg, #00b09b, #00838f); }
+        .t-icon-3 { background: linear-gradient(135deg, #ab47bc, #6a1b9a); }
+
+        .t-details { flex-grow: 1; text-align: left; padding: 0 25px; }
+        .t-details h3 { font-size: 22px; color: var(--text-dark); margin-bottom: 5px; font-weight: 800; }
+        .t-details p { font-size: 15px; color: var(--text-gray); font-weight: 500; margin: 0; }
+
+        .t-start-btn { padding: 14px 30px; border-radius: 15px; font-size: 16px; font-weight: 800; color: #fff; border: none; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.2); white-space: nowrap; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .t-start-btn:hover { transform: scale(1.05); }
+        .t-btn-1 { background: linear-gradient(135deg, #ffb300, #ff8f00); }
+        .t-btn-2 { background: linear-gradient(135deg, #00b09b, #00838f); }
+        .t-btn-3 { background: linear-gradient(135deg, #ab47bc, #6a1b9a); }
+
+        @media (max-width: 700px) {
+            .test-selection-card { flex-direction: column; text-align: center; gap: 15px; padding: 25px 20px; }
+            .t-details { padding: 0; text-align: center; }
+            .t-card-1::before { display: none; }
+        }
 
         /* --- 2. Quiz Screen --- */
         .quiz-screen { display: none; }
-        .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px; }
-        .q-count { font-weight: 700; color: var(--primary); background: #e8f5e9; padding: 4px 15px; border-radius: 15px; font-size: 14px; }
+        .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 2px solid #edf2f7; padding-bottom: 15px; }
+        .q-count { font-weight: 800; color: var(--white); background: var(--primary-dark); padding: 6px 20px; border-radius: 20px; font-size: 15px; box-shadow: 0 4px 10px rgba(0, 131, 143, 0.2); }
+        .test-title-indicator { font-weight: 800; color: #ff8f00; font-size: 18px; text-transform: uppercase; background: #fff8e1; padding: 5px 15px; border-radius: 10px; border: 1px solid #ffe082;}
         
-        .progress-container { width: 100%; background: #eee; height: 8px; border-radius: 4px; margin-bottom: 30px; overflow: hidden; }
-        .progress-bar { height: 100%; background: linear-gradient(90deg, var(--primary-light), var(--primary)); width: 0%; transition: width 0.3s ease; }
+        .progress-container { width: 100%; background: #e2e8f0; height: 10px; border-radius: 5px; margin-bottom: 30px; overflow: hidden; }
+        .progress-bar { height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-dark)); width: 0%; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 
-        .question-text { font-size: 22px; font-weight: 700; color: var(--dark); margin-bottom: 25px; line-height: 1.4; }
+        .question-text { font-size: 24px; font-weight: 700; color: var(--text-dark); margin-bottom: 30px; line-height: 1.5; }
+        .options-grid { display: flex; flex-direction: column; gap: 15px; margin-bottom: 35px; }
         
-        .options-grid { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; }
-        .option { background: #fdfdfd; border: 2px solid #f0f0f0; border-radius: 14px; padding: 18px 25px; font-size: 16px; font-weight: 500; text-align: left; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: space-between; }
-        .option:hover { background: #f1f8e9; border-color: #c8e6c9; }
-        .option.selected { background: #e8f5e9; border-color: var(--primary-light); color: var(--primary); font-weight: 600; }
+        .option { background: var(--white); border: 2px solid #e2e8f0; border-radius: 16px; padding: 20px 25px; font-size: 17px; font-weight: 600; text-align: left; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: space-between; color: var(--text-gray); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .option:not(.locked):hover { background: #f7fafc; border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0, 131, 143, 0.1); color: var(--primary-dark); }
+        .option.correct { background: var(--correct-bg) !important; border-color: var(--correct-border) !important; color: var(--correct-text) !important; box-shadow: 0 0 15px rgba(56, 161, 105, 0.4) !important; }
+        .option.wrong { background: var(--wrong-bg) !important; border-color: var(--wrong-border) !important; color: var(--wrong-text) !important; box-shadow: 0 0 15px rgba(229, 62, 62, 0.4) !important; }
+        
+        .anim-pop { animation: popGlow 0.5s ease-out forwards; }
+        .anim-shake { animation: shake 0.4s ease-in-out forwards; }
+        @keyframes popGlow { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 50% { transform: translateX(8px); } 75% { transform: translateX(-8px); } }
 
-        .quiz-footer { display: flex; justify-content: space-between; align-items: center; }
-        .nav-btn { background: var(--primary); color: var(--white); border: none; padding: 14px 35px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 10px; }
-        .nav-btn:hover { background: var(--dark); transform: translateY(-2px); }
-        .nav-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .quiz-footer { display: flex; justify-content: flex-end; align-items: center; }
+        .nav-btn { background: var(--primary-dark); color: var(--white); border: none; padding: 15px 40px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 10px; box-shadow: 0 5px 15px rgba(0, 131, 143, 0.2); }
+        .nav-btn:hover { background: #006064; transform: translateY(-2px); }
+        .nav-btn:disabled { background: #cbd5e0; color: #a0aec0; cursor: not-allowed; transform: none; box-shadow: none; }
 
         /* --- 3. Result Screen --- */
         .result-screen { display: none; text-align: center; }
-        .result-screen .congrats-icon { font-size: 70px; color: var(--accent); margin-bottom: 20px; animation: bounce 2s infinite; }
-        .result-screen h2 { font-size: 36px; font-weight: 800; color: var(--dark); margin-bottom: 15px; }
-        .message-box { font-size: 18px; color: #555; max-width: 600px; margin: 0 auto 30px auto; line-height: 1.6; font-weight: 500; }
+        .result-screen .congrats-icon { font-size: 80px; color: var(--accent); margin-bottom: 20px; animation: bounceIcon 2s infinite; filter: drop-shadow(0 10px 10px rgba(255,179,0,0.3)); }
+        .result-screen h2 { font-size: 40px; font-weight: 800; color: var(--primary-dark); margin-bottom: 15px; }
+        .message-box { font-size: 18px; color: var(--text-gray); max-width: 600px; margin: 0 auto 30px auto; line-height: 1.6; font-weight: 500; }
         
-        .score-circle { width: 160px; height: 160px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-light), var(--primary)); color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 40px auto; box-shadow: 0 10px 25px rgba(46,125,50,0.3); }
-        .score-circle h1 { font-size: 46px; font-weight: 800; line-height: 1; }
-        .score-circle span { font-size: 14px; opacity: 0.8; font-weight: 500; text-transform: uppercase; margin-top: 5px; }
+        .score-circle { width: 180px; height: 180px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 30px auto; box-shadow: 0 15px 30px rgba(0, 131, 143, 0.4); border: 5px solid #e0f2f1; }
+        .score-circle h1 { font-size: 56px; font-weight: 800; line-height: 1; margin-bottom: 0; }
+        .score-circle span { font-size: 16px; opacity: 0.9; font-weight: 600; text-transform: uppercase; margin-top: 5px; }
 
-        .restart-btn { background: var(--accent); color: var(--dark); border: none; padding: 15px 40px; border-radius: 30px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(255,202,40,0.4); }
-        .restart-btn:hover { background: #ffb300; transform: scale(1.05); }
+        /* Certificate Box */
+        .cert-container { background: rgba(0, 131, 143, 0.04); border: 2px dashed var(--primary); padding: 30px; border-radius: 20px; margin-bottom: 35px; box-shadow: inset 0 2px 10px rgba(0,0,0,0.02); }
+        .cert-container h3 { color: var(--primary-dark); font-size: 20px; margin-bottom: 10px; font-weight: 700; }
+        .cert-input { width: 100%; max-width: 400px; padding: 14px 20px; border: 2px solid #b2dfdb; border-radius: 12px; font-size: 16px; font-weight: 600; text-align: center; margin-bottom: 15px; outline: none; transition: 0.3s; }
+        .cert-input:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(0,176,155,0.2); }
+        .cert-btn { background: linear-gradient(135deg, #ff9800, #ff5722); color: white; border: none; padding: 14px 35px; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(255,87,34,0.3); display: inline-flex; align-items: center; gap: 10px; }
+        .cert-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,87,34,0.4); }
 
-        /* --- Animations --- */
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-20px); } 60% { transform: translateY(-10px); } }
+        .restart-btn { background: #e2e8f0; color: var(--text-dark); border: none; padding: 15px 40px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        .restart-btn:hover { background: #cbd5e0; }
 
-        footer { text-align: center; padding: 25px; margin-top: auto; border-top: 1px solid #eee; background: #fff; }
+        footer { text-align: center; padding: 25px; margin-top: auto; border-top: 1px solid rgba(255,255,255,0.5); background: rgba(255,255,255,0.7); backdrop-filter: blur(5px); z-index: 1; }
     </style>
 </head>
 <body>
 
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
     <nav>
         <a href="index.html" class="logo"><i class="fa-solid fa-wheat-awn"></i> Razaagripoint</a>
-        <a href="semester2.html" class="exit-btn"><i class="fa-solid fa-xmark"></i> Exit Test</a>
+        <a href="index.html" class="exit-btn"><i class="fa-solid fa-xmark"></i> Exit</a>
     </nav>
 
     <div class="container">
         <div class="quiz-card">
             
             <div id="langScreen" class="lang-screen">
+                <div class="welcome-badge">⭐ THE ULTIMATE TEST PORTAL</div>
+                <br>
                 <i class="fa-solid fa-dna main-icon"></i>
-                <h1>Seed Technology Mock Test</h1>
-                <p>MJPRU Bareilly Syllabus Pattern • 50 Questions • 50 Marks</p>
+                <h1>Principles of Seed Technology</h1>
+                <p>Welcome! Yahan aapko Seed Technology ke <b>150 Unique Questions</b> ke 3 alag-alag premium test milenge. Apni taiyari ke hisaab se koi bhi test select karen aur shuru karen!</p>
                 
-                <div class="lang-btn-grid">
-                    <button class="lang-btn" onclick="startQuiz('hi')">
-                        हिन्दी टेस्ट
-                        <span>बीज प्रौद्योगिकी - हिंदी माध्यम</span>
-                    </button>
-                    <button class="lang-btn" onclick="startQuiz('en')">
-                        English Test
-                        <span>Seed Technology - English Medium</span>
-                    </button>
+                <div class="test-options-container">
+                    <div class="test-selection-card t-card-1">
+                        <div class="t-icon-box t-icon-1"><i class="fa-solid fa-star"></i></div>
+                        <div class="t-details">
+                            <h3>YouTube Video Test</h3>
+                            <p>50 Most Expected Seed Tech MCQs</p>
+                        </div>
+                        <button class="t-start-btn t-btn-1" onclick="startQuiz(1)">
+                            Start Test <i class="fa-solid fa-play"></i>
+                        </button>
+                    </div>
+
+                    <div class="test-selection-card t-card-2">
+                        <div class="t-icon-box t-icon-2"><i class="fa-solid fa-flask"></i></div>
+                        <div class="t-details">
+                            <h3>2nd Test (Advanced)</h3>
+                            <p>50 Fresh & Unique Practice MCQs</p>
+                        </div>
+                        <button class="t-start-btn t-btn-2" onclick="startQuiz(2)">
+                            Start Test <i class="fa-solid fa-play"></i>
+                        </button>
+                    </div>
+
+                    <div class="test-selection-card t-card-3">
+                        <div class="t-icon-box t-icon-3"><i class="fa-solid fa-award"></i></div>
+                        <div class="t-details">
+                            <h3>Mega Practice Test</h3>
+                            <p>50 Extra Hard University Level MCQs</p>
+                        </div>
+                        <button class="t-start-btn t-btn-3" onclick="startQuiz(3)">
+                            Start Test <i class="fa-solid fa-play"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
             <div id="quizScreen" class="quiz-screen">
                 <div class="quiz-header">
                     <span id="questionCount" class="q-count">Question 1 of 50</span>
+                    <span id="testTitleIndicator" class="test-title-indicator">YouTube Video Test</span>
                 </div>
                 
                 <div class="progress-container">
@@ -124,13 +220,12 @@
                 <div id="optionsGrid" class="options-grid"></div>
 
                 <div class="quiz-footer">
-                    <button id="prevBtn" class="nav-btn" onclick="prevQuestion()" disabled><i class="fa-solid fa-arrow-left"></i> Previous</button>
-                    <button id="nextBtn" class="nav-btn" onclick="nextQuestion()">Next <i class="fa-solid fa-arrow-right"></i></button>
+                    <button id="nextBtn" class="nav-btn" onclick="nextQuestion()" disabled>Next Question <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
             </div>
 
             <div id="resultScreen" class="result-screen">
-                <div id="congratsIcon" class="congrats-icon"><i class="fa-solid fa-award"></i></div>
+                <div id="congratsIcon" class="congrats-icon"><i class="fa-solid fa-trophy"></i></div>
                 <h2 id="resultHeading">Great Job!</h2>
                 <div id="messageBox" class="message-box">Results loading...</div>
                 
@@ -139,7 +234,15 @@
                     <span>Out of 50</span>
                 </div>
 
-                <button class="restart-btn" onclick="restartQuiz()"><i class="fa-solid fa-rotate-right"></i> Retake Test</button>
+                <div class="cert-container">
+                    <h3>🏆 Download Your Topper Certificate</h3>
+                    <p style="font-size: 14px; color: var(--text-gray); margin-bottom: 15px;">Apna poora naam niche box mein likhein aur ek <b>Professional High-Quality Certificate</b> turant download karen:</p>
+                    <input type="text" id="studentName" class="cert-input" placeholder="Yahan Apna Naam Likhein">
+                    <br>
+                    <button class="cert-btn" onclick="generateCertificate()"><i class="fa-solid fa-file-arrow-down"></i> Get My Premium Certificate</button>
+                </div>
+
+                <button class="restart-btn" onclick="restartQuiz()"><i class="fa-solid fa-rotate-right"></i> Choose Another Test</button>
             </div>
 
         </div>
@@ -150,128 +253,400 @@
     </footer>
 
     <script>
-        // Highly Curated MJPRU-Based Core Questions for Seed Technology
-        const quizData = {
-            en: [
-                { q: "What is the genetic purity percentage required for Breeder Seed?", o: ["100%", "99.5%", "98%", "95%"], a: 0 },
-                { q: "Which color tag is issued for Foundation Seed certificates?", o: ["Golden Yellow", "White", "Azure Blue", "Opal Green"], a: 1 },
-                { q: "The Indian Seed Act was passed by Parliament in which year?", o: ["1966", "1968", "1970", "1972"], a: 0 },
-                { q: "Tetrazolium (TZ) test is extensively conducted to determine seed:", o: ["Purity", "Viability / Living status", "Moisture content", "Seed health"], a: 1 },
-                { q: "Certified seed is the progeny of which class of seed?", o: ["Breeder seed", "Foundation seed", "Nucleus seed", "Registered seed"], a: 1 },
-                { q: "The tag color of Certified Seed which is distributed directly to farmers is:", o: ["White", "Golden Yellow", "Azure Blue", "Red"], a: 2 },
-                { q: "Isolation distance is maintained during seed production to avoid:", o: ["Cross-pollination", "Insect attacks", "Overwatering", "Soil salinity"], a: 0 },
-                { q: "Which of the following seed classes does not have a formal tag in India?", o: ["Nucleus seed", "Breeder seed", "Foundation seed", "Certified seed"], a: 0 },
-                { q: "The process of removing off-type plants from a seed production field is called:", o: ["Weeding", "Rouging", "Pruning", "Thinning"], a: 1 },
-                { q: "What is the biochemical reagent used in Tetrazolium testing?", o: ["2,3,5-triphenyl tetrazolium chloride", "Mercuric chloride", "Hydrochloric acid", "Iodine solution"], a: 0 },
-                { q: "Real Value of Seed formula is calculated as:", o: ["(Purity % × Germination %) / 100", "(Purity % + Germination %) / 100", "Purity % × 100", "Germination % / Purity %"], a: 0 },
-                { q: "Seed moisture content is generally measured using which machine/method?", o: ["Hot air oven method", "Lux meter", "pH meter", "Centrifuge"], a: 0 },
-                { q: "Central Seed Testing Laboratory (CSTL) in India is located at:", o: ["New Delhi", "Varanasi", "Bareilly", "Bengaluru"], a: 1 },
-                { q: "The progeny of Nucleus Seed is known as:", o: ["Breeder Seed", "Foundation Seed", "Certified Seed", "Registered Seed"], a: 0 },
-                { q: "As per ISTA rules, the minimum working sample size for seed testing depends upon:", o: ["Seed size and weight", "Seed color", "Seed container type", "Room temperature"], a: 0 }
-            ],
-            hi: [
-                { q: "प्रजनक बीज (Breeder Seed) के लिए आवश्यक आनुवंशिक शुद्धता (Genetic Purity) कितनी होती है?", o: ["100%", "99.5%", "98%", "95%"], a: 0 },
-                { q: "आधारीय बीज (Foundation Seed) के थैलों पर किस रंग का टैग लगाया जाता है?", o: ["सुनहरा पीला", "सफेद", "आसमानी नीला (Azure Blue)", "हरा"], a: 1 },
-                { q: "भारतीय बीज अधिनियम (Seed Act) संसद द्वारा किस वर्ष पारित किया गया था?", o: ["1966", "1968", "1970", "1972"], a: 0 },
-                { q: "टेट्राजोलियम (TZ) परीक्षण मुख्य रूप से बीज की क्या मापने के लिए किया जाता है?", o: ["भौतिक शुद्धता", "जीवंतता (Viability)", "नमी की मात्रा", "बीज स्वास्थ्य"], a: 1 },
-                { q: "प्रमाणित बीज (Certified Seed) किस वर्ग के बीज की संतति (Progeny) होती है?", o: ["प्रजनक बीज", "आधारीय बीज", "केंद्रक बीज", "पंजीकृत बीज"], a: 1 },
-                { q: "किसानों को वितरित किए जाने वाले प्रमाणित बीज (Certified Seed) का टैग किस रंग का होता है?", o: ["सफेद", "सुनहरा पीला", "आसमानी नीला", "लाल"], a: 2 },
-                { q: "बीज उत्पादन के दौरान अनुवांशिक संदूषण को रोकने के लिए क्या बनाए रखा जाता है?", o: ["पृथक्करण दूरी (Isolation Distance)", "कीटनाशक स्प्रे", "अधिक सिंचाई", "मृदा लवणता"], a: 0 },
-                { q: "भारत में निम्नलिखित में से किस बीज वर्ग के लिए कोई औपचारिक टैग जारी नहीं होता?", o: ["केंद्रक बीज (Nucleus Seed)", "प्रजनक बीज", "आधारीय बीज", "प्रमाणित बीज"], a: 0 },
-                { q: "बीज उत्पादन खेत से अवांछित या 'ऑफ-टाइप' पौधों को हटाने की क्रिया को क्या कहते हैं?", o: ["निराई", "रोगिंग (Roguing)", "कटाई", "विरलीकरण"], a: 1 },
-                { q: "टेट्राजोलियम परीक्षण में किस जैव रासायनिक अभिकर्मक (Reagent) का उपयोग किया जाता है?", o: ["2,3,5-ट्राइफेनिल टेट्राजोलियम क्लोराइड", "मरक्यूरिक क्लोराइड", "हाइड्रोक्लोरिक एसिड", "आयोडीन घोल"], a: 0 },
-                { q: "बीज का वास्तविक मूल्य (Real Value of Seed) ज्ञात करने का सूत्र क्या है?", o: ["(शुद्धता % × अंकुरण %) / 100", "(शुद्धता % + अंकुरण %) / 100", "शुद्धता % × 100", "अंकुरण % / शुद्धता %"], a: 0 },
-                { q: "बीज में नमी की मात्रा (Moisture Content) मापने के लिए किस प्रामाणिक विधि का उपयोग होता है?", o: ["हॉट एयर ओवन विधि", "लक्स मीटर", "पीएच मीटर", "सेंट्रीफ्यूज"], a: 0 },
-                { q: "भारत में केंद्रीय बीज परीक्षण प्रयोगशाला (Central Seed Testing Laboratory) कहाँ स्थित है?", o: ["नई दिल्ली", "वाराणसी", "बरेली", "बेंगलुरु"], a: 1 },
-                { q: "केंद्रक बीज (Nucleus Seed) की संतति को किस नाम से जाना जाता है?", o: ["प्रजनक बीज (Breeder Seed)", "आधारीय बीज", "प्रमाणित बीज", "पंजीकृत बीज"], a: 0 },
-                { q: "ISTA नियमों के अनुसार, बीज परीक्षण के लिए वर्किंग सैंपल का न्यूनतम आकार किस पर निर्भर करता है?", o: ["बीज के आकार और वजन पर", "बीज के रंग पर", "कंटेनर के प्रकार पर", "कमरे के तापमान पर"], a: 0 }
-            ]
-        };
+        // TEST 1: Seed Technology - Basics, Seed Act, Classes of Seed, Genetic Purity (50 Questions)
+        const test1Data = [
+            { q: "National Seeds Corporation (NSC) ki sthapana kis varsh hui thi?", o: ["A) 1963", "B) 1966", "C) 1969", "D) 1971"], a: 0 },
+            { q: "Bharat mein Seed Act (Beej Adhiniyam) kab parit hua tha?", o: ["A) 1963", "B) 1966", "C) 1968", "D) 1971"], a: 1 },
+            { q: "Seed Rules kis varsh banaye gaye the?", o: ["A) 1966", "B) 1968", "C) 1972", "D) 1983"], a: 1 },
+            { q: "Breeder seed (Prajnak beej) ka tag color kaisa hota hai?", o: ["A) White (Safed)", "B) Golden Yellow (Sunhara peela)", "C) Azure Blue (Neela)", "D) Purple (Baingani)"], a: 1 },
+            { q: "Foundation seed (Aadhariya beej) par kis rang ka tag lagaya jata hai?", o: ["A) White", "B) Blue", "C) Golden Yellow", "D) Green"], a: 0 },
+            { q: "Certified seed (Pramanit beej) ke bag par kaun sa tag hota hai?", o: ["A) White", "B) Golden Yellow", "C) Azure Blue", "D) Opal Green"], a: 2 },
+            { q: "Registered seed par kis rang ka tag hota hai?", o: ["A) Purple", "B) White", "C) Blue", "D) Green"], a: 0 },
+            { q: "Nucleus seed (Kendra beej) par kaun sa tag hota hai?", o: ["A) White tag", "B) Golden Yellow tag", "C) No tag is required", "D) Green tag"], a: 2 },
+            { q: "Breeder seed ki anuwanshik shuddhata (Genetic Purity) kitni honi chahiye?", o: ["A) 98%", "B) 99%", "C) 99.9%", "D) 100%"], a: 3 },
+            { q: "Foundation seed kis beej ki santati (progeny) hai?", o: ["A) Nucleus seed", "B) Breeder seed", "C) Certified seed", "D) Registered seed"], a: 1 },
+            { q: "Certified seed kis beej ki progeny hai?", o: ["A) Nucleus seed", "B) Breeder seed", "C) Foundation seed", "D) Truthful seed"], a: 2 },
+            { q: "Beej ki jeevantata (Viability) parikshan ke liye sabse prachalit test kaun sa hai?", o: ["A) Grow Out Test", "B) Tetrazolium (TZ) test", "C) Moisture test", "D) Purity test"], a: 1 },
+            { q: "TZ test mein kis chemical ka upyog hota hai?", o: ["A) 2,3,5-triphenyl tetrazolium chloride", "B) Potassium nitrate", "C) Sodium hypochlorite", "D) Mercuric chloride"], a: 0 },
+            { q: "Real Value (RV) of seed nikalne ka sahi sutra (formula) kya hai?", o: ["A) Purity % + Germination % / 100", "B) (Purity % x Germination %) / 100", "C) Germination % / Purity %", "D) Purity % - Germination %"], a: 1 },
+            { q: "Grow Out Test (GOT) kiske nirdharan ke liye kiya jata hai?", o: ["A) Seed viability", "B) Seed moisture", "C) Genetic purity", "D) Physical purity"], a: 2 },
+            { q: "Kharpatwar ya anya faslon ke beej ko fasal se nikalne ki kriya ko kya kehte hain?", o: ["A) Roguing", "B) Harvesting", "C) Threshing", "D) Processing"], a: 0 },
+            { q: "Gehu (Wheat) ka nyuntam ankurann (Minimum Germination) percentage kitna tay hai?", o: ["A) 70%", "B) 80%", "C) 85%", "D) 90%"], a: 2 },
+            { q: "Kapas (Cotton) ka minimum germination percentage kitna hota hai?", o: ["A) 60%", "B) 65%", "C) 75%", "D) 85%"], a: 1 },
+            { q: "Beej parikshan (Seed Testing) ke doran working sample kahan se liya jata hai?", o: ["A) Primary sample", "B) Composite sample", "C) Submitted sample", "D) Lot sample"], a: 2 },
+            { q: "International Seed Testing Association (ISTA) ki sthapana kis varsh hui thi?", o: ["A) 1920", "B) 1924", "C) 1950", "D) 1966"], a: 1 },
+            { q: "ISTA ka mukhyalaya (Headquarters) kahan sthit hai?", o: ["A) Geneva (Switzerland)", "B) Rome (Italy)", "C) New York (Italy)", "D) Washington (USA)"], a: 0 },
+            { q: "Bharat ki Central Seed Testing Laboratory (CSTL) kahan sthit hai?", o: ["A) New Delhi", "B) Varanasi", "C) Bangalore", "D) Hyderabad"], a: 1 },
+            { q: "Seed Act ke kis section ke tahat Central Seed Committee ka gathan hota hai?", o: ["A) Section 3", "B) Section 5", "C) Section 8", "D) Section 12"], a: 0 },
+            { q: "Seed Act ke kis section ke tahat seed inspectors ki niyukti hoti hai?", o: ["A) Section 10", "B) Section 13", "C) Section 14", "D) Section 15"], a: 1 },
+            { q: "Foundation seed ke utpadan ke liye Gehu ki isolation distance kitni hoti hai?", o: ["A) 3 meters", "B) 5 meters", "C) 10 meters", "D) 50 meters"], a: 0 },
+            { q: "Certified seed ke utpadan ke liye Gehu ki isolation distance kitni hoti hai?", o: ["A) 3 meters", "B) 5 meters", "C) 10 meters", "D) 20 meters"], a: 0 },
+            { q: "Shuddh seed sample mein aanya faslon, kharpatwar aur kachre ko alag karne ki prathmikta kya kehlati hai?", o: ["A) Physical purity", "B) Genetic purity", "C) Seed viability", "D) Seed vigor"], a: 0 },
+            { q: "Swaroop, rang, aakar mein ek saman dikhne wale beejon ko kya kehte hain?", o: ["A) Viable seed", "B) Pure seed", "C) Hard seed", "D) Dormant seed"], a: 1 },
+            { q: "Ek gram Gehu mein lagbhag kitne beej hote hain?", o: ["A) 10-12", "B) 25-30", "C) 50-60", "D) 100-120"], a: 1 },
+            { q: "Seed Index kya darshata hai?", o: ["A) 10 beejon ka wajan", "B) 100 beejon ka wajan", "C) 1000 beejon ka wajan", "D) 1 kg beejon ki sankhya"], a: 1 },
+            { q: "Test Weight kya darshata hai?", o: ["A) 100 beejon ka wajan", "B) 1000 beejon ka wajan", "C) 1 kg beejon ki sankhya", "D) Beej ka aakar"], a: 1 },
+            { q: "Bhartiya Beej Adhiniyam kab se lagu (enforced) hua tha?", o: ["A) 2nd Oct 1969", "B) 15th Aug 1968", "C) 26th Jan 1970", "D) 1st Jan 1966"], a: 0 },
+            { q: "TZ test ka avishkar kisne kiya tha?", o: ["A) Barton", "B) Lakon", "C) Jethro Tull", "D) Vavilov"], a: 1 },
+            { q: "TZ test mein jeevit (viable) beej kis rang mein badal jate hain?", o: ["A) Neela (Blue)", "B) Hara (Green)", "C) Lal/Gulabi (Red/Pink)", "D) Kala (Black)"], a: 2 },
+            { q: "TZ test mein laal rang kis compound ke banne se aata hai?", o: ["A) Formazan", "B) Formic acid", "C) Tetrazolium", "D) Cytochrome"], a: 0 },
+            { q: "Beej ki susuptavastha (Dormancy) ko todne ke liye thande tapman ka upchar kya kehlata hai?", o: ["A) Scarification", "B) Stratification", "C) Vernalization", "D) Pasteurization"], a: 1 },
+            { q: "Kathor beej aavaran (Hard seed coat) ko todne ki kriya ko kya kehte hain?", o: ["A) Stratification", "B) Scarification", "C) Emasculation", "D) Threshing"], a: 1 },
+            { q: "Beej upchar (Seed treatment) ka sahi kram kya hai?", o: ["A) FIR (Fungicide, Insecticide, Rhizobium)", "B) RIF", "C) IFR", "D) FRI"], a: 0 },
+            { q: "Seed viability ka pata lagane ke liye sabse tez test kaun sa hai?", o: ["A) Germination test", "B) Field test", "C) TZ test", "D) Grow out test"], a: 2 },
+            { q: "Orthodox seeds kis prakar ke hote hain?", o: ["A) Jinhe kam nami par sukhaya ja sake", "B) Jinhe sukhaya nahi ja sakta", "C) Jo kabhi nahi ugate", "D) Jo turant mar jate hain"], a: 0 },
+            { q: "Recalcitrant seeds ka udaharan kaun sa hai?", o: ["A) Gehu", "B) Chawal", "C) Aam (Mango)", "D) Sarso"], a: 2 },
+            { q: "Anaj wali faslon ke liye surakshit bhandaran (safe storage) beej nami lagbhag kitni honi chahiye?", o: ["A) 4-5%", "B) 10-12%", "C) 16-18%", "D) 20-22%"], a: 1 },
+            { q: "Tilhan (Oilseeds) ke liye surakshit bhandaran beej nami kitni hoti hai?", o: ["A) 4-5%", "B) 8-9%", "C) 12-14%", "D) 15-18%"], a: 1 },
+            { q: "Kapas ke beej (Cotton seed) ko lint-free karne ke liye kis acid ka upyog kiya jata hai?", o: ["A) Nitric acid", "B) Sulphuric acid (H2SO4)", "C) Hydrochloric acid", "D) Acetic acid"], a: 1 },
+            { q: "Beej ki utpadakta aur shuddhata banaye rakhne ke liye kaun sa certification kiya jata hai?", o: ["A) ISI mark", "B) Agmark", "C) Seed Certification", "D) ISO mark"], a: 2 },
+            { q: "Kharpatwar jiske beej fasal ke beej jaise dikhte hain, unhe kya kehte hain?", o: ["A) Objectionable weed", "B) Parasitic weed", "C) Satellite weed", "D) None of the above"], a: 0 },
+            { q: "Gehu (Wheat) ka aapattijanak kharpatwar (objectionable weed) kaun sa hai?", o: ["A) Phalaris minor", "B) Convolvulus arvensis", "C) Cynodon dactylon", "D) Parthenium"], a: 1 },
+            { q: "Beej bhandaran (Seed Storage) ke dauran kitto se bachav ke liye kaun si gas use hoti hai?", o: ["A) Oxygen", "B) Aluminum phosphide", "C) Carbon dioxide", "D) Ethylene"], a: 1 },
+            { q: "Kisan dwara agle varsh ki fasal ke liye rakha gaya beej kiske antargat aata hai?", o: ["A) Certified seed", "B) Truthful labelled seed", "C) Farmer saved seed", "D) Foundation seed"], a: 2 },
+            { q: "Hybrid seeds ka utpadan har saal kyu karna padta hai?", o: ["A) Yield badhane ke liye", "B) Vigor loss aur segregation se bachne ke liye", "C) Price kam karne ke liye", "D) Naye tag lagane ke liye"], a: 1 }
+        ];
 
-        // Replicates elements programmatically up to 50 maintaining pristine counter functionality
-        function fillTo50() {
-            ['en', 'hi'].forEach(l => {
-                const base = [...quizData[l]];
-                while(quizData[l].length < 50) {
-                    const temp = base[quizData[l].length % base.length];
-                    quizData[l].push({...temp});
-                }
-            });
-        }
-        fillTo50();
+        // TEST 2: Advanced Processing, Dormancy, Testing, Equipment (50 Unique Questions)
+        const test2Data = [
+            { q: "Seed processing mein 'Scalper' ka kya mukhya kaam hota hai?", o: ["A) Chote kachre ko hatana", "B) Bade kachre aur dhelon ko alag karna", "C) Beej par tag lagana", "D) Beej ki nami mapna"], a: 1 },
+            { q: "Air-Screen Cleaner kis siddhant par kaam karta hai?", o: ["A) Hawa ka pravah aur chalni ka aakar", "B) Gurutvakarshan", "C) Chumbakiya bal", "D) Rang (Color)"], a: 0 },
+            { q: "Specific gravity separator kis aadhar par beejon ko alag karta hai?", o: ["A) Beej ka aakar", "B) Beej ka wajan / density", "C) Beej ka rang", "D) Beej ki lambaayi"], a: 1 },
+            { q: "Spiral separator mukhya roop se kis aadhar par grading karta hai?", o: ["A) Golai (Roundness)", "B) Wajan", "C) Nami", "D) Lambaayi"], a: 0 },
+            { q: "Magnetic separator ka upyog kin beejon ko alag karne ke liye kiya jata hai?", o: ["A) Jinki satah khurduri (rough) ho", "B) Jo bhari hon", "C) Jo gol hon", "D) Jo hare rang ke hon"], a: 0 },
+            { q: "Beejon se ruye (lint) hatane wali masheen ko kya kehte hain?", o: ["A) Scalper", "B) Delinter", "C) Treater", "D) Dryer"], a: 1 },
+            { q: "Gibeberellic acid (GA3) ka upyog seed technology mein kisliye hota hai?", o: ["A) Nami badhane", "B) Dormancy todne", "C) Tagging ke liye", "D) Fungi rokne"], a: 1 },
+            { q: "Seed pelleting ka mukhya uddeshya kya hai?", o: ["A) Beej ko chamkadar banana", "B) Beej ka aakar badhana aur boyai mein aasaani", "C) Beej ka wajan kam karna", "D) Beej ki dormacy badhana"], a: 1 },
+            { q: "Beejon par chemical ka aavaran (coating) kya kehlata hai?", o: ["A) Seed dressing / treatment", "B) Stratification", "C) Vernalization", "D) Scalping"], a: 0 },
+            { q: "Seed certification process kitne charno (stages) mein hota hai?", o: ["A) 2", "B) 4", "C) 6", "D) 8"], a: 2 },
+            { q: "Certification standard ke hisaab se, Bajra ka minimum germination % kitna hai?", o: ["A) 60%", "B) 70%", "C) 75%", "D) 85%"], a: 2 },
+            { q: "Chawal (Paddy) ka minimum physical purity percentage kitna tay hai?", o: ["A) 90%", "B) 95%", "C) 98%", "D) 99%"], a: 2 },
+            { q: "Seed plot technique kis fasal ke rog-mukt beej utpadan ke liye hai?", o: ["A) Aloo (Potato)", "B) Gehu (Wheat)", "C) Mungfali (Groundnut)", "D) Sarso (Mustard)"], a: 0 },
+            { q: "Seed Plot Technique kisne viksit ki thi?", o: ["A) M.S. Swaminathan", "B) Pushkarnath", "C) K.C. Mehta", "D) N.E. Borlaug"], a: 1 },
+            { q: "Aloo mein Seed Plot Technique kis samasya se bachne ke liye apnayi jati hai?", o: ["A) Fungal rogo se", "B) Virus (Aphid vector) se", "C) Nematode se", "D) Bacterial wilt se"], a: 1 },
+            { q: "Tetrazolium test mein beej ka kaun sa hissa laal hota hai agar woh zinda ho?", o: ["A) Endosperm", "B) Seed coat", "C) Embryo (Bhrun)", "D) Cotyledon"], a: 2 },
+            { q: "Electrical conductivity test kya mapta hai?", o: ["A) Beej ki nami", "B) Beej ka wajan", "C) Beej ki vigor (Oaj)", "D) Beej ka aakar"], a: 2 },
+            { q: "Seed vigor test ka udhaharan kaun sa hai?", o: ["A) TZ test", "B) Accelerated ageing test", "C) Moisture test", "D) Purity test"], a: 1 },
+            { q: "Beejon mein nami mapne ki standard oven method ka tapman kitna hota hai?", o: ["A) 100°C for 2 hours", "B) 130°C for 1-2 hours", "C) 150°C for 10 hours", "D) 80°C for 1 hour"], a: 1 },
+            { q: "Moisture meter kis siddhant par kaam karta hai?", o: ["A) Electrical resistance / capacitance", "B) Heat transfer", "C) Magnetic field", "D) Optical reflection"], a: 0 },
+            { q: "Truthful Labelled Seed (TLS) par kaun sa tag lagta hai?", o: ["A) Yellow", "B) Opal Green", "C) Blue", "D) No tag"], a: 1 },
+            { q: "Truthful Labelled Seed ke liye certification agency ka certification: ", o: ["A) Anivarya (Compulsory) hai", "B) Aichhik (Voluntary) hai", "C) Gair-kanooni hai", "D) Sirf export ke liye hai"], a: 1 },
+            { q: "Foundation seed tag ka aakar (Size) kya hota hai?", o: ["A) 15 x 7.5 cm", "B) 10 x 5 cm", "C) 15 x 10 cm", "D) 20 x 10 cm"], a: 0 },
+            { q: "Certified seed tag ka aakar (Size) kya hota hai?", o: ["A) 10 x 5 cm", "B) 15 x 7.5 cm", "C) 20 x 15 cm", "D) 12 x 6 cm"], a: 1 },
+            { q: "Gehu (Wheat) ka objectionable weed (Aapattijanak kharpatwar) kaun sa hai?", o: ["A) Phalaris minor", "B) Convolvulus arvensis", "C) Cuscuta", "D) Argemone"], a: 1 },
+            { q: "Sarso (Mustard) ka objectionable weed kaun sa hai?", o: ["A) Phalaris minor", "B) Argemone mexicana", "C) Cuscuta", "D) Avena fatua"], a: 1 },
+            { q: "Lucerne ka objectionable weed kaun sa hai?", o: ["A) Cuscuta (Dodder)", "B) Orobanche", "C) Striga", "D) Loranthus"], a: 0 },
+            { q: "Hybrid Maize (Makka) ke foundation seed ke liye isolation distance kya hai?", o: ["A) 100 meter", "B) 200 meter", "C) 400 meter", "D) 800 meter"], a: 2 },
+            { q: "Hybrid Maize ke certified seed ke liye isolation distance kya hai?", o: ["A) 100 meter", "B) 200 meter", "C) 400 meter", "D) 800 meter"], a: 1 },
+            { q: "Bajra (Pearl millet) foundation seed ke liye isolation distance kya hai?", o: ["A) 200 meter", "B) 400 meter", "C) 1000 meter", "D) 2000 meter"], a: 2 },
+            { q: "Jowar (Sorghum) foundation seed ke liye isolation distance kya hai?", o: ["A) 200 meter", "B) 400 meter", "C) 1000 meter", "D) 2000 meter"], a: 1 },
+            { q: "Bhendi (Okra) foundation seed ke liye isolation distance kya hai?", o: ["A) 50 meter", "B) 200 meter", "C) 400 meter", "D) 1000 meter"], a: 2 },
+            { q: "Tomato foundation seed ke liye isolation distance kya hai?", o: ["A) 10 meter", "B) 50 meter", "C) 100 meter", "D) 200 meter"], a: 1 },
+            { q: "Hybrid seed production mein 'A' line kya hoti hai?", o: ["A) Male sterile line", "B) Maintainer line", "C) Restorer line", "D) Inbred line"], a: 0 },
+            { q: "Hybrid seed production mein 'B' line kya hoti hai?", o: ["A) Male sterile line", "B) Maintainer line", "C) Restorer line", "D) Terminator line"], a: 1 },
+            { q: "Hybrid seed production mein 'R' line kya hoti hai?", o: ["A) Restorer line", "B) Maintainer line", "C) Sterile line", "D) Basic line"], a: 0 },
+            { q: "Beejon ki ayu (Longevity) ke aadhar par 'Microbiotic' beej kitne saal zinda rehte hain?", o: ["A) 100 saal", "B) 15-100 saal", "C) 3 saal se kam", "D) 3-15 saal"], a: 2 },
+            { q: "Jo beej 3 se 15 saal tak zinda reh sakte hain unhe kya kehte hain?", o: ["A) Microbiotic", "B) Mesobiotic", "C) Macrobiotic", "D) Endobiotic"], a: 1 },
+            { q: "Harrington ke anusar beej nami mein 1% ki kami se beej ki aayu par kya asar padta hai?", o: ["A) Aayu aadhi ho jati hai", "B) Aayu dugni ho jati hai", "C) Koi asar nahi padta", "D) Aayu 10 guna ho jati hai"], a: 1 },
+            { q: "Harrington ke anusar bhandaran tapman mein har 5°C ki kami se beej ki aayu?", o: ["A) Aadhi ho jati hai", "B) Dugni ho jati hai", "C) Chauguni ho jati hai", "D) Zero ho jati hai"], a: 1 },
+            { q: "Vavilov ke anusar faslon ke utpatti kendra (Centers of Origin) kitne hain?", o: ["A) 4", "B) 8", "C) 12", "D) 20"], a: 1 },
+            { q: "Beej niyam (Seed Rules) ke kis prapatra (Form) mein beejo ka vishleshan parinam (result) diya jata hai?", o: ["A) Form 1", "B) Form 2", "C) Form 3", "D) Form 4"], a: 1 },
+            { q: "Physical purity board par kis prakar ka shisha (glass) laga hota hai?", o: ["A) Magnifying glass", "B) Diaphanoscope", "C) Microscopic glass", "D) Telescope glass"], a: 1 },
+            { q: "Beej germinator mein humidity kitni honi chahiye?", o: ["A) 50-60%", "B) 70-80%", "C) 90-95%", "D) 100%"], a: 2 },
+            { q: "Chana (Gram) ka minimum germination % kitna hota hai?", o: ["A) 75%", "B) 85%", "C) 90%", "D) 95%"], a: 1 },
+            { q: "Mungfali (Groundnut) ka minimum germination % kitna hota hai?", o: ["A) 60%", "B) 70%", "C) 80%", "D) 90%"], a: 1 },
+            { q: "Soya bean ka minimum germination % kitna hota hai?", o: ["A) 60%", "B) 70%", "C) 80%", "D) 90%"], a: 1 },
+            { q: "Pyaz (Onion) ka minimum germination % kitna hota hai?", o: ["A) 60%", "B) 70%", "C) 80%", "D) 90%"], a: 1 },
+            { q: "Phizikal purity test ke liye sample ko kinte hisso mein baanta jata hai?", o: ["A) 2", "B) 3", "C) 4", "D) 5"], a: 2 },
+            { q: "Jo beej soti avastha mein rahte hain aur anukul paristitiyo mein bhi nahi ugate unhe kya kehte hain?", o: ["A) Hard seeds", "B) Dormant seeds", "C) Dead seeds", "D) Viable seeds"], a: 1 }
+        ];
 
-        let currentLang = 'en';
+        // TEST 3: Mega Practice - Advanced Genetics, SRR, Economics, Specific Cases (50 Unique Questions)
+        const test3Data = [
+            { q: "Seed Replacement Rate (SRR) kya darshata hai?", o: ["A) Total boya gaya beej / Certified seed", "B) Kitne pratishat kshetra mein naya certified seed use hua hai", "C) Beej ke phatne ki dar", "D) Nami nikalne ki dar"], a: 1 },
+            { q: "Swaparagit (Self-pollinated) faslon mein SRR samanyatah kitni varsh mein badalni chahiye?", o: ["A) Har saal", "B) 3-4 saal mein", "C) 10 saal mein", "D) Kabhi nahi"], a: 1 },
+            { q: "Parparagit (Cross-pollinated) faslon mein SRR samanyatah kitni varsh mein badalni chahiye?", o: ["A) Har saal", "B) 3 saal mein", "C) 8 saal mein", "D) 12 saal mein"], a: 0 },
+            { q: "Hybrid faslon ka Seed Replacement Rate (SRR) kitna hona chahiye?", o: ["A) 33%", "B) 50%", "C) 75%", "D) 100%"], a: 3 },
+            { q: "Beej utpadan mein 'Rouging' kab karni chahiye?", o: ["A) Sirf phool aane se pehle", "B) Phool aane par", "C) Fasal pakne par", "D) Fasalon ki sabhi avasthaon par aavashyakta anusar"], a: 3 },
+            { q: "Roguing karte samay kin paudhon ko nikalna chahiye?", o: ["A) Off-types (Anya prakar)", "B) Diseased plants (Rogi paudhe)", "C) Weed plants (Kharpatwar)", "D) Uprokt sabhi"], a: 3 },
+            { q: "National Seed Project (NSP) kis varsh shuru kiya gaya tha?", o: ["A) 1969", "B) 1976", "C) 1983", "D) 1990"], a: 1 },
+            { q: "New Seed Policy kab aayi thi?", o: ["A) 1988", "B) 1999", "C) 2002", "D) 2010"], a: 0 },
+            { q: "Seed Control Order kis varsh jari kiya gaya tha?", o: ["A) 1966", "B) 1968", "C) 1983", "D) 1989"], a: 2 },
+            { q: "PPV & FRA (Protection of Plant Varieties & Farmers' Rights Act) kab parit hua tha?", o: ["A) 1999", "B) 2001", "C) 2005", "D) 2010"], a: 1 },
+            { q: "PPV & FRA ka mukhyalaya kahan sthit hai?", o: ["A) New Delhi", "B) Hyderabad", "C) Pune", "D) Chennai"], a: 0 },
+            { q: "Beej pramanikaran (Seed Certification) sanstha kiske antargat aati hai?", o: ["A) Central Government", "B) State Government", "C) Private Companies", "D) NGOs"], a: 1 },
+            { q: "SSC ka purn roop kya hai?", o: ["A) State Seed Corporation", "B) State Seed Committee", "C) State Seed Certification", "D) Standard Seed Company"], a: 0 },
+            { q: "Beej ki suptavastha (Dormancy) mapne ke liye kaun sa parikshan kiya jata hai?", o: ["A) Germination test", "B) Tetrazolium test (TZ test)", "C) Moisture test", "D) Grow out test"], a: 1 },
+            { q: "Beej praudhyogiki (Seed Technology) ke anusar, beej kya hai?", o: ["A) Ripened ovule (Paripakva bijand)", "B) Ripened ovary (Paripakva andashay)", "C) Leaf bud", "D) Stem cutting"], a: 0 },
+            { q: "Dicot (Dweebeejpatri) beej mein bhrun (embryo) ko poshan kahan se milta hai?", o: ["A) Endosperm", "B) Cotyledons", "C) Seed coat", "D) Radicle"], a: 1 },
+            { q: "Monocot (Ekbeejpatri) beej mein bhrun ko poshan kahan se milta hai?", o: ["A) Cotyledons", "B) Endosperm", "C) Testa", "D) Plumule"], a: 1 },
+            { q: "Beej ke bahari aavaran (Outer coat) ko kya kehte hain?", o: ["A) Tegmen", "B) Testa", "C) Hilum", "D) Micropyle"], a: 1 },
+            { q: "Beej ke bhitari aavaran (Inner coat) ko kya kehte hain?", o: ["A) Testa", "B) Tegmen", "C) Coleoptile", "D) Radicle"], a: 1 },
+            { q: "Bhrun (Embryo) ka kaun sa bhag jad (root) banata hai?", o: ["A) Plumule", "B) Radicle", "C) Cotyledon", "D) Endosperm"], a: 1 },
+            { q: "Bhrun ka kaun sa bhag tana (shoot) banata hai?", o: ["A) Radicle", "B) Plumule", "C) Testa", "D) Hilum"], a: 1 },
+            { q: "Aloo (Potato) ke TPR (True Potato Seed) ka beej dar kitna hai?", o: ["A) 50-100 gram/ha", "B) 100-150 gram/ha", "C) 500 gram/ha", "D) 1 kg/ha"], a: 1 },
+            { q: "Toria (Mustard) ke certified seed plot ke aapas (border) mein kitni duri (isolation) honi chahiye?", o: ["A) 50m", "B) 100m", "C) 200m", "D) 400m"], a: 1 },
+            { q: "Til (Sesame) ke foundation seed ke liye isolation distance kitni hoti hai?", o: ["A) 50m", "B) 100m", "C) 200m", "D) 400m"], a: 1 },
+            { q: "Arhar (Pigeon pea) ke foundation seed ke liye isolation distance kitni hoti hai?", o: ["A) 100m", "B) 200m", "C) 400m", "D) 500m"], a: 1 },
+            { q: "Beej sushuptavasta (Dormancy) ka mukhya karan kya ho sakta hai?", o: ["A) Hard seed coat", "B) Immature embryo", "C) Presence of inhibitors", "D) Uprokt sabhi"], a: 3 },
+            { q: "Gibeberellin ke alawa kaun sa chemical beej ki dormancy todne mein madad karta hai?", o: ["A) Potassium nitrate (KNO3)", "B) Sodium chloride", "C) Copper sulphate", "D) Zinc sulphate"], a: 0 },
+            { q: "Thiourea ka upyog beej me kisliye kiya jata hai?", o: ["A) Dormancy todne ke liye", "B) Nami kam karne", "C) Fungi marne", "D) Wajan badhane"], a: 0 },
+            { q: "Beej praudhyogiki me 'Desiccant' ka kya karya hai?", o: ["A) Beej mein nami badhana", "B) Beej se nami sokhna (absorb moisture)", "C) Beej ko rangna", "D) Beej ki dormancy badhana"], a: 1 },
+            { q: "Silica gel ka upyog seed storage mein kis roop mein hota hai?", o: ["A) Fertilizer", "B) Fungicide", "C) Desiccant", "D) Hormone"], a: 2 },
+            { q: "Purity analysis me bacha hua ansh jo beej nahi hota, use kya kehte hain?", o: ["A) Pure seed", "B) Other crop seed", "C) Inert matter (Nishkriya padarth)", "D) Weed seed"], a: 2 },
+            { q: "Kharpatwar ka beej purity analysis me kis category me aata hai?", o: ["A) Pure seed", "B) Inert matter", "C) Weed seed", "D) Other crop seed"], a: 2 },
+            { q: "Grow Out Test (GOT) mein kitne paudhe check kiye jate hain (samanyatah minimum)?", o: ["A) 100", "B) 400", "C) 1000", "D) 5000"], a: 1 },
+            { q: "Certified seed par jo Azure Blue tag lagta hai, uski lambaai aur chaudai kitni hoti hai?", o: ["A) 10 x 5 cm", "B) 15 x 7.5 cm", "C) 20 x 10 cm", "D) 12 x 6 cm"], a: 1 },
+            { q: "Beej pramanikaran (Certification) ka prathmik uddeshya kya hai?", o: ["A) Beej ka wajan badhana", "B) Kisano ko ucch gunwatta ka beej uplabdh karana", "C) Beej ki kimat badhana", "D) Beej ki nami badhana"], a: 1 },
+            { q: "Certification agency fasal ki khet mein inspection kitni baar karti hai?", o: ["A) Fasal ki avashyakta anusar (2 se 4 baar)", "B) Sirf ek baar", "C) Sirf katayi ke samay", "D) Kabhi nahi"], a: 0 },
+            { q: "Seed Multiplication Ratio (SMR) Gehu ke liye lagbhag kitna hai?", o: ["A) 1:20", "B) 1:50", "C) 1:100", "D) 1:200"], a: 0 },
+            { q: "Seed Multiplication Ratio Bajra (Pearl millet) ke liye lagbhag kitna hai?", o: ["A) 1:20", "B) 1:50", "C) 1:100", "D) 1:200"], a: 3 },
+            { q: "National Seed Research and Training Centre (NSRTC) kahan sthit hai?", o: ["A) New Delhi", "B) Varanasi", "C) Bangalore", "D) Hyderabad"], a: 1 },
+            { q: "ICAR-Indian Institute of Seed Science (IISS) kahan sthit hai?", o: ["A) Mau (UP)", "B) Kanpur", "C) Lucknow", "D) Meerut"], a: 0 },
+            { q: "Beejon ko thande aur nam (moist) tapman par rakhkar dormancy todne ko kya kehte hain?", o: ["A) Stratification", "B) Scarification", "C) Vernalization", "D) Priming"], a: 0 },
+            { q: "Beej ki avastha sudharne ke liye paani/rasayan mein bhigokar sikhane ki kriya kya kehlati hai?", o: ["A) Seed dressing", "B) Seed Priming", "C) Seed coating", "D) Seed pelleting"], a: 1 },
+            { q: "Paddy (Dhan) mein dormancy samanyata kitne din ki hoti hai?", o: ["A) 0 din", "B) 15-30 din", "C) 6 mahine", "D) 2 saal"], a: 1 },
+            { q: "Kapas mein seed rate (American/Desi) lagbhag kitni hoti hai?", o: ["A) 5-6 kg/ha", "B) 15-20 kg/ha", "C) 40-50 kg/ha", "D) 80-100 kg/ha"], a: 1 },
+            { q: "Beej bhandaran me tapman badhne par beej ki shvasan (respiration) dar par kya asar padta hai?", o: ["A) Ghat jati hai", "B) Badh jati hai", "C) Samaan rehti hai", "D) Ruk jati hai"], a: 1 },
+            { q: "Beej utpadan khet me pollination ke liye madhumakhiyo (Honey bees) ka upyog kin faslon me zaroori hai?", o: ["A) Gehu, Dhan", "B) Surajmukhi, Sarso", "C) Jowar, Bajra", "D) Makka"], a: 1 },
+            { q: "Cotton (Kapas) ke seed me upsthit zahreela tatva (toxic compound) kaun sa hai?", o: ["A) Gossypol", "B) Saponin", "C) Erucic acid", "D) Ricin"], a: 0 },
+            { q: "Khesari dal (Lathyrus) ke beej me kaun sa neurotoxin paya jata hai?", o: ["A) BOAA (Beta-N-Oxalylamino-L-alanine)", "B) HCN", "C) Gossypol", "D) Glucosinolate"], a: 0 },
+            { q: "Foundation seed utpadan hetu kitne percent genetic purity zaroori hai?", o: ["A) 98.0%", "B) 99.0%", "C) 99.5%", "D) 100%"], a: 2 },
+            { q: "Certified seed utpadan hetu minimum genetic purity kitni honi chahiye?", o: ["A) 95.0%", "B) 98.0%", "C) 99.0%", "D) 100%"], a: 2 }
+        ];
+
+        const allTests = [test1Data, test2Data, test3Data];
+        const testTitles = ["YouTube Video Test", "2nd Test (Advanced)", "Mega Practice Test"];
+        let currentQuizData = [];
         let currentIdx = 0;
-        let answers = new Array(50).fill(null);
+        let score = 0;
+        let questionLocked = false;
 
-        function startQuiz(l) {
-            currentLang = l;
+        // Upgraded Zero-Dependency Audio Engine
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+
+        function playSound(type) {
+            if (!audioCtx) audioCtx = new AudioContext();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'correct') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
+                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1); 
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+            } else if (type === 'wrong') {
+                osc.type = 'sawtooth'; 
+                osc.frequency.setValueAtTime(150, audioCtx.currentTime); 
+                osc.frequency.linearRampToValueAtTime(80, audioCtx.currentTime + 0.6); 
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.6); 
+            }
+        }
+
+        // Starts the specific selected test
+        function startQuiz(testNumber) {
+            currentQuizData = allTests[testNumber - 1];
+            document.getElementById('testTitleIndicator').innerText = testTitles[testNumber - 1];
+            
             document.getElementById('langScreen').style.display = 'none';
             document.getElementById('quizScreen').style.display = 'block';
             showQ();
         }
 
         function showQ() {
-            const q = quizData[currentLang][currentIdx];
-            document.getElementById('questionCount').innerText = currentLang === 'en' ? `Question ${currentIdx + 1} of 50` : `प्रश्न ${currentIdx + 1} / 50`;
-            document.getElementById('questionText').innerText = q.q;
-            document.getElementById('progressBar').style.width = `${((currentIdx + 1)/50)*100}%`;
+            questionLocked = false;
+            document.getElementById('nextBtn').disabled = true;
+            const q = currentQuizData[currentIdx];
+            document.getElementById('questionCount').innerText = `Question ${currentIdx + 1} of 50`;
+            document.getElementById('questionText').innerText = `Q${currentIdx + 1}. ${q.q}`;
+            document.getElementById('progressBar').style.width = `${((currentIdx + 1) / 50) * 100}%`;
 
             const grid = document.getElementById('optionsGrid');
             grid.innerHTML = '';
             q.o.forEach((txt, i) => {
-                const btn = document.createElement('button');
-                btn.className = 'option' + (answers[currentIdx] === i ? ' selected' : '');
-                btn.innerHTML = `<span>${txt}</span> <i class="fa-regular ${answers[currentIdx] === i ? 'fa-circle-check' : 'fa-circle'}"></i>`;
-                btn.onclick = () => { answers[currentIdx] = i; showQ(); };
+                const btn = document.createElement('div');
+                btn.className = 'option';
+                btn.innerHTML = `<span>${txt}</span> <i class="fa-regular fa-circle" id="icon-${i}"></i>`;
+                btn.onclick = () => selectOption(btn, i, q.a);
                 grid.appendChild(btn);
             });
+        }
 
-            document.getElementById('prevBtn').disabled = currentIdx === 0;
-            const nBtn = document.getElementById('nextBtn');
-            if(currentIdx === 49) {
-                nBtn.innerHTML = currentLang === 'en' ? 'Finish Test <i class="fa-solid fa-flag-checkered"></i>' : 'टेस्ट समाप्त करें <i class="fa-solid fa-flag-checkered"></i>';
-                nBtn.style.background = '#2e7d32';
+        function selectOption(selectedBtn, selectedIndex, correctIndex) {
+            if (questionLocked) return;
+            questionLocked = true;
+
+            const allOptions = document.querySelectorAll('.option');
+            allOptions.forEach(opt => opt.classList.add('locked'));
+
+            if (selectedIndex === correctIndex) {
+                selectedBtn.classList.add('correct', 'anim-pop');
+                document.getElementById(`icon-${selectedIndex}`).className = "fa-solid fa-circle-check";
+                playSound('correct');
+                score++;
             } else {
-                nBtn.innerHTML = currentLang === 'en' ? 'Next <i class="fa-solid fa-arrow-right"></i>' : 'आगे बढ़ें <i class="fa-solid fa-arrow-right"></i>';
-                nBtn.style.background = 'var(--primary)';
+                selectedBtn.classList.add('wrong', 'anim-shake');
+                document.getElementById(`icon-${selectedIndex}`).className = "fa-solid fa-circle-xmark";
+                playSound('wrong');
+                allOptions[correctIndex].classList.add('correct', 'anim-pop');
+                document.getElementById(`icon-${correctIndex}`).className = "fa-solid fa-circle-check";
             }
+            document.getElementById('nextBtn').disabled = false;
         }
 
         function nextQuestion() {
-            if(currentIdx < 49) { currentIdx++; showQ(); } else { results(); }
-        }
-
-        function prevQuestion() {
-            if(currentIdx > 0) { currentIdx--; showQ(); }
+            if (currentIdx < 49) { currentIdx++; showQ(); } else { results(); }
         }
 
         function results() {
-            let score = 0;
-            quizData[currentLang].forEach((q, i) => { if(answers[i] === q.a) score++; });
             document.getElementById('quizScreen').style.display = 'none';
             document.getElementById('resultScreen').style.display = 'block';
             document.getElementById('scoreDisplay').innerText = score;
-            
-            const perc = (score/50)*100;
+            const perc = (score / 50) * 100;
             const h = document.getElementById('resultHeading');
             const m = document.getElementById('messageBox');
             
             if(perc >= 80) {
-                h.innerText = currentLang === 'en' ? "👑 MJPRU Seed Tech Topper!" : "👑 एमजेपीआरयू सीड टेक टॉपर!";
-                m.innerText = currentLang === 'en' ? "Sensational work! Your understanding of seed classification and ISTA rules is flawless. You are 100% ready for the MJPRU semester exam!" : "अद्भुत परफॉरमेंस! सर्टिफाइड सीड क्लासेस और बीज नियमों पर आपका गजब का कंट्रोल है। एमजेपीआरयू मेन एग्जाम्स में आप निश्चित ही झंडे गाड़ने वाले हैं!";
+                h.innerText = "👑 Ultimate Seed Tech Topper!";
+                m.innerText = "Kya baat hai! Aapne is test mein kamaal kar diya. Aap kal ke exam mein pakka top karne wale hain!";
             } else if(perc >= 50) {
-                h.innerText = currentLang === 'en' ? "✨ Good Academic Score!" : "✨ सराहनीय प्रयास!";
-                m.innerText = currentLang === 'en' ? "Well done! Your basic knowledge about seed acts and viability testing is strong. Just revise the isolation distances once to top." : "बहुत बढ़ia! यूनिवर्सिटी पैटर्न के हिसाब से आपका स्कोर काफी बेहतर है। बस विभिन्न फसलों की पृथक्करण दूरी (Isolation Distance) की सारणी को एक बार और दोहरा लें!";
+                h.innerText = "✨ Superb Effort!";
+                m.innerText = "Bahut badiya! Aapke maximum concepts clear hain. Jo questions red huye, unhe ek baar dhyan mein rakhiye, aapka selection tay hai!";
             } else {
-                h.innerText = currentLang === 'en' ? "📚 Keep Revising!" : "📚 निरंतर अभ्यास करें!";
-                m.innerText = currentLang === 'en' ? "Seed Technology requires technical memory. Re-read Breeder and Foundation seed standards on Razaagripoint and try again." : "सीड टेक्नोलॉजी का सिलेबस थोड़ा टेक्निकल है। सेमेस्टर डैशबोर्ड से बीज प्रमाणन और वर्किंग सैंपल के नियमों को एक बार फिर पढ़ें और दोबारा टेस्ट दें!";
+                h.innerText = "📚 Keep Learning!";
+                m.innerText = "Koi baat nahi! Galtiyon se hi seekhte hain. Ab aapko saare sahi green answers pata chal gaye hain. Inhe yaad rakhiye aur exam mein fod dijiye!";
             }
         }
 
+        function generateCertificate() {
+            const nameInput = document.getElementById('studentName').value.trim();
+            if (!nameInput) {
+                alert("Please enter your name to generate the certificate!");
+                return;
+            }
+
+            const canvas = document.createElement('canvas');
+            canvas.width = 1200;
+            canvas.height = 850;
+            const ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = '#FAFAFA';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.strokeStyle = '#004d40';
+            ctx.lineWidth = 20;
+            ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+
+            ctx.strokeStyle = '#D4AF37';
+            ctx.lineWidth = 6;
+            ctx.strokeRect(48, 48, canvas.width - 96, canvas.height - 96);
+
+            ctx.fillStyle = '#004d40';
+            ctx.fillRect(35, 35, 30, 30);
+            ctx.fillRect(canvas.width - 65, 35, 30, 30);
+            ctx.fillRect(35, canvas.height - 65, 30, 30);
+            ctx.fillRect(canvas.width - 65, canvas.height - 65, 30, 30);
+
+            ctx.save();
+            ctx.globalAlpha = 0.04;
+            ctx.fillStyle = '#004d40';
+            ctx.font = 'bold 130px Arial';
+            ctx.textAlign = 'center';
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.rotate(-Math.PI / 6); 
+            ctx.fillText('RAZAAGRIPOINT', 0, 0);
+            ctx.restore(); 
+
+            ctx.fillStyle = '#004d40';
+            ctx.font = 'bold 50px Georgia, serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('CERTIFICATE OF EXCELLENCE', 600, 160);
+            
+            ctx.fillStyle = '#D4AF37';
+            ctx.font = 'bold 22px Arial, sans-serif';
+            ctx.fillText('THIS IS PROUDLY PRESENTED TO', 600, 230);
+
+            ctx.fillStyle = '#b71c1c';
+            ctx.font = 'bold 65px "Times New Roman", Times, serif';
+            ctx.fillText(nameInput.toUpperCase(), 600, 325);
+
+            ctx.strokeStyle = '#D4AF37';
+            ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.moveTo(300, 355); ctx.lineTo(900, 355); ctx.stroke();
+
+            ctx.fillStyle = '#333333';
+            ctx.font = '22px Arial, sans-serif';
+            ctx.fillText('For demonstrating outstanding academic performance by scoring', 600, 420);
+            
+            ctx.fillStyle = '#004d40';
+            ctx.fillRect(430, 450, 340, 60);
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = 'bold 30px Arial';
+            ctx.fillText(`${score} MARKS OUT OF 50`, 600, 492);
+
+            ctx.fillStyle = '#333333';
+            ctx.font = '22px Arial, sans-serif';
+            const currentTestName = document.getElementById('testTitleIndicator').innerText;
+            ctx.fillText(`in the online Mock Examination (${currentTestName}) for Principles of Seed Technology.`, 600, 560);
+            
+            ctx.fillStyle = '#555555';
+            ctx.font = 'italic 20px Arial, sans-serif';
+            ctx.fillText('Syllabus Based on Mahatma Jyotibha Phoole Rohelkhand University (MJPRU).', 600, 600);
+
+            const dateStr = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+            ctx.strokeStyle = '#333333';
+            ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(150, 720); ctx.lineTo(350, 720); ctx.stroke();
+            
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillText(dateStr, 250, 705);
+            
+            ctx.font = '18px Arial';
+            ctx.fillText('Date of Completion', 250, 745);
+
+            ctx.beginPath(); ctx.moveTo(850, 720); ctx.lineTo(1050, 720); ctx.stroke();
+            
+            ctx.fillStyle = '#004d40';
+            ctx.font = 'bold 24px cursive, "Brush Script MT", serif'; 
+            ctx.fillText('Mushahid Raza', 950, 705);
+            
+            ctx.fillStyle = '#333333';
+            ctx.font = '18px Arial';
+            ctx.fillText('Admin / Founder', 950, 745);
+
+            ctx.beginPath();
+            ctx.arc(600, 715, 60, 0, Math.PI * 2);
+            ctx.fillStyle = '#D4AF37'; 
+            ctx.fill();
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = '#b71c1c'; 
+            ctx.stroke();
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 15px Arial';
+            ctx.fillText('RAZAAGRIPOINT', 600, 710);
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText('VERIFIED', 600, 735);
+
+            const downloadLink = document.createElement('a');
+            downloadLink.download = `${nameInput.replace(/\s+/g, '_')}_Seed_Technology_Certificate.png`;
+            downloadLink.href = canvas.toDataURL('image/png');
+            downloadLink.click();
+        }
+
         function restartQuiz() {
-            currentIdx = 0; answers.fill(null);
+            currentIdx = 0; score = 0; currentQuizData = [];
+            document.getElementById('studentName').value = '';
             document.getElementById('resultScreen').style.display = 'none';
+            document.getElementById('quizScreen').style.display = 'none';
             document.getElementById('langScreen').style.display = 'block';
         }
     </script>
